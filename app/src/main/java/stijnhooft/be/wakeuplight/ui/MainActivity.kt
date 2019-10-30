@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import stijnhooft.be.wakeuplight.R
-import stijnhooft.be.wakeuplight.ui.alarmbottomsheet.CreateAlarmBottomSheet
 import stijnhooft.be.wakeuplight.ui.alarm.AlarmViewAdapter
+import stijnhooft.be.wakeuplight.ui.alarmbottomsheet.CreateAlarmBottomSheet
 import stijnhooft.be.wakeuplight.ui.viewmodel.AlarmViewModel
 
 
@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var alarmRecyclerView: RecyclerView
     private lateinit var alarmsLayoutManager: RecyclerView.LayoutManager
     private lateinit var alarmViewModel: AlarmViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             CreateAlarmBottomSheet()
 
         add.setOnClickListener { showCreateAlarmBottomSheet(createAlarmBottomSheet) }
-        createAlarmBottomSheet.setSaveListener{ alarm -> alarmViewModel.create(alarm) }
+        createAlarmBottomSheet.setSaveListener { alarm -> alarmViewModel.create(alarm) }
     }
 
     private fun showCreateAlarmBottomSheet(modalBottomSheet: CreateAlarmBottomSheet) {
@@ -59,20 +60,20 @@ class MainActivity : AppCompatActivity() {
             adapter = alarmViewAdapter
         }
 
+        val itemTouchHelperCallback =
+            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
 
-        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false;
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    alarmViewAdapter.remove(viewHolder.adapterPosition)
+                }
             }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                alarmViewAdapter.remove(viewHolder.adapterPosition)
-            }
-        }
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(alarmRecyclerView)
     }
 

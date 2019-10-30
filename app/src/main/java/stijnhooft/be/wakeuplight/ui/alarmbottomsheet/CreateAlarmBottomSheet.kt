@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TimePicker
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import org.joda.time.DateTime
 import stijnhooft.be.wakeuplight.R
 import stijnhooft.be.wakeuplight.backend.domain.Alarm
 
@@ -34,7 +35,8 @@ class CreateAlarmBottomSheet : BottomSheetDialogFragment() {
 
         // add click listener to save button
         saveButton.setOnClickListener {
-            callback(Alarm(null, timePicker.hour, timePicker.minute, true))
+            val id = DateTime().millis
+            callback(Alarm(id, timePicker.hour, timePicker.minute, true))
             this.dismiss()
         }
 

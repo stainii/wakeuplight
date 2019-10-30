@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import stijnhooft.be.wakeuplight.AlarmUtil
 import stijnhooft.be.wakeuplight.R
 import stijnhooft.be.wakeuplight.backend.domain.Alarm
-import stijnhooft.be.wakeuplight.ui.AlarmUiUtil
 import stijnhooft.be.wakeuplight.ui.viewmodel.AlarmViewModel
 
 
@@ -42,7 +42,7 @@ class AlarmViewAdapter internal constructor(
 
     fun remove(index: Int) {
         alarmViewModel.delete(alarms[index])
-        this.notifyItemRemoved(index);
+        this.notifyItemRemoved(index)
     }
 
     private fun initEnabledSwitch(
@@ -62,7 +62,7 @@ class AlarmViewAdapter internal constructor(
         holder: AlarmViewHolder,
         alarm: Alarm
     ) {
-        holder.time.text = AlarmUiUtil.toString(alarm.hours, alarm.minutes)
+        holder.time.text = AlarmUtil.toString(alarm.hours, alarm.minutes)
     }
 
     private fun setAlarms(alarms: List<Alarm>) {

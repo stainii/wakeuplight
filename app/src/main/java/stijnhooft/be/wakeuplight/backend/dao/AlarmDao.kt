@@ -8,7 +8,10 @@ import stijnhooft.be.wakeuplight.backend.domain.Alarm
 interface AlarmDao {
 
     @Query("select * from alarm")
-    fun findAll(): LiveData<List<Alarm>>
+    fun observeAll(): LiveData<List<Alarm>>
+
+    @Query("select * from alarm")
+    fun findAll(): List<Alarm>
 
     @Insert
     suspend fun create(vararg alarms: Alarm)
@@ -22,5 +25,7 @@ interface AlarmDao {
     @Query("delete from alarm")
     suspend fun deleteAll()
 
+    @Query("select * from alarm where id = :id")
+    suspend fun findById(id: Long): Alarm
 
 }
