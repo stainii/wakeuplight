@@ -1,4 +1,4 @@
-package stijnhooft.be.wakeuplight.ui.alarm
+package stijnhooft.be.wakeuplight.ui.configure.alarm
 
 import android.view.View
 import android.widget.Switch

@@ -18,14 +18,26 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".ui.FiringAlarmActivity"
+            android:name=".ui.fire.FiringAlarmActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_firing_alarm"
             android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme" />
+            android:theme="@style/FullscreenTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="stijnhooft.be"
+                    android:pathPrefix="/wake-up-light/"
+                    android:scheme="http" />
+            </intent-filter>
+
+        </activity>
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.configure.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">

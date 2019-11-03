@@ -1,4 +1,4 @@
-package stijnhooft.be.wakeuplight.ui
+package stijnhooft.be.wakeuplight.ui.configure
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import stijnhooft.be.wakeuplight.R
-import stijnhooft.be.wakeuplight.ui.alarm.AlarmViewAdapter
-import stijnhooft.be.wakeuplight.ui.alarmbottomsheet.CreateAlarmBottomSheet
-import stijnhooft.be.wakeuplight.ui.viewmodel.AlarmViewModel
+import stijnhooft.be.wakeuplight.ui.configure.alarm.AlarmViewAdapter
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,7 +48,8 @@ class MainActivity : AppCompatActivity() {
         alarmViewModel = ViewModelProvider(this).get(AlarmViewModel::class.java)
 
         alarmsLayoutManager = LinearLayoutManager(this)
-        val alarmViewAdapter = AlarmViewAdapter(this, alarmViewModel)
+        val alarmViewAdapter =
+            AlarmViewAdapter(this, alarmViewModel)
         alarmRecyclerView = alarms.apply {
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView

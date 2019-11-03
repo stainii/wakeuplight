@@ -10,7 +10,7 @@ import org.joda.time.LocalDate
 import stijnhooft.be.wakeuplight.backend.AlarmScheduler
 import stijnhooft.be.wakeuplight.backend.domain.Alarm
 import stijnhooft.be.wakeuplight.backend.repository.AlarmRepository
-import stijnhooft.be.wakeuplight.ui.FiringAlarmActivity
+import stijnhooft.be.wakeuplight.ui.fire.FiringAlarmActivity
 
 
 class AlarmBroadcastReceiver : BroadcastReceiver() {

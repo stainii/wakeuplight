@@ -1,4 +1,4 @@
-package stijnhooft.be.wakeuplight.ui.viewmodel
+package stijnhooft.be.wakeuplight.ui.configure
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

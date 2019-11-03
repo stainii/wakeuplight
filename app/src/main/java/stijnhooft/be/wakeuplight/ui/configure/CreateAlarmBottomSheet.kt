@@ -1,4 +1,4 @@
-package stijnhooft.be.wakeuplight.ui.alarmbottomsheet
+package stijnhooft.be.wakeuplight.ui.configure
 
 import android.os.Bundle
 import android.view.ContextThemeWrapper
@@ -32,6 +32,7 @@ class CreateAlarmBottomSheet : BottomSheetDialogFragment() {
         // set time picker defaults
         timePicker.hour = 7
         timePicker.minute = 0
+        timePicker.setIs24HourView(true)
 
         // add click listener to save button
         saveButton.setOnClickListener {

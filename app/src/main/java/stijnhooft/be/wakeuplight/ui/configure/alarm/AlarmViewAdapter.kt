@@ -1,4 +1,4 @@
-package stijnhooft.be.wakeuplight.ui.alarm
+package stijnhooft.be.wakeuplight.ui.configure.alarm
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import stijnhooft.be.wakeuplight.AlarmUtil
 import stijnhooft.be.wakeuplight.R
 import stijnhooft.be.wakeuplight.backend.domain.Alarm
-import stijnhooft.be.wakeuplight.ui.viewmodel.AlarmViewModel
+import stijnhooft.be.wakeuplight.ui.configure.AlarmViewModel
 
 
 class AlarmViewAdapter internal constructor(

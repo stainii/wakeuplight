@@ -1,4 +1,4 @@
-package stijnhooft.be.wakeuplight.ui
+package stijnhooft.be.wakeuplight.ui.fire
 
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +17,7 @@ import stijnhooft.be.wakeuplight.backend.BluetoothHelper
  */
 class FiringAlarmActivity : AppCompatActivity() {
 
-    private lateinit var soundHelper: SoundHelper
+    private lateinit var spotifyPlayer: SpotifyPlayer
     private var bluetoothHelper: BluetoothHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,8 +26,8 @@ class FiringAlarmActivity : AppCompatActivity() {
         setContentView(R.layout.activity_firing_alarm)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        soundHelper = SoundHelper(this)
-        trySettingUpBluetooth()
+        spotifyPlayer = SpotifyPlayer(this)
+        //trySettingUpBluetooth()
 
         // set up ui
         hideUI()
@@ -35,8 +35,8 @@ class FiringAlarmActivity : AppCompatActivity() {
         initTurnOffAlarmButton()
 
         // ring the alarm and turn on the light
-        soundHelper.ringAlarm()
-        bluetoothHelper?.send("1")
+        spotifyPlayer.play()
+        //bluetoothHelper?.send("1")
     }
 
     private fun trySettingUpBluetooth() {
@@ -49,9 +49,9 @@ class FiringAlarmActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        soundHelper.turnOffAlarm()
-        bluetoothHelper?.send("0")
-        bluetoothHelper?.disconnect()
+        spotifyPlayer.stop()
+        //bluetoothHelper?.send("0")
+        //bluetoothHelper?.disconnect()
     }
 
     private fun initTurnOffAlarmButton() {
