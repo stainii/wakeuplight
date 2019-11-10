@@ -34,9 +34,8 @@ class FiringAlarmActivity : AppCompatActivity() {
         allowTheActivityToBeVisibleOnTheLockScreen()
         initTurnOffAlarmButton()
 
-        // ring the alarm and turn on the light
+        // ring the alarm
         spotifyPlayer.play()
-        bluetoothHelper?.send("1")
     }
 
     private fun trySettingUpBluetooth() {

@@ -16,9 +16,6 @@ data class Alarm(
 
     var enabled: Boolean,
 
-    @ColumnInfo(name = "temporarily_disabled")
-    var temporarilyDisabled: Boolean,
-
     @ColumnInfo(name = "monday")
     var enabledOnMonday: Boolean,
 

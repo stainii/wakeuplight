@@ -13,7 +13,7 @@ import stijnhooft.be.wakeuplight.backend.repository.AlarmRepository
 import stijnhooft.be.wakeuplight.ui.fire.FiringAlarmActivity
 
 
-class AlarmBroadcastReceiver : BroadcastReceiver() {
+class AlarmSoundBroadcastReceiver : BroadcastReceiver() {
 
     private lateinit var alarmRepository: AlarmRepository
     private lateinit var alarmScheduler: AlarmScheduler

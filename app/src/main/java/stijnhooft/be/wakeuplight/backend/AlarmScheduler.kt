@@ -7,7 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import stijnhooft.be.wakeuplight.AlarmUtil
-import stijnhooft.be.wakeuplight.backend.broadcastreceiver.AlarmBroadcastReceiver
+import stijnhooft.be.wakeuplight.backend.broadcastreceiver.AlarmLightBroadcastReceiver
+import stijnhooft.be.wakeuplight.backend.broadcastreceiver.AlarmSoundBroadcastReceiver
 import stijnhooft.be.wakeuplight.backend.domain.Alarm
 
 
@@ -17,37 +18,57 @@ class AlarmScheduler(private val context: Context) {
 
     fun schedule(alarm: Alarm) {
         Log.i("AlarmScheduler", "Scheduling alarm $alarm")
-        val pendingIntent = createPendingIntent(alarm)
 
+        val pendingIntentAlarmSound = createPendingIntentForAlarmSound(alarm)
         val upcomingDateInMilliseconds =
             AlarmUtil.getUpcomingDateInMilliseconds(alarm.hours, alarm.minutes)
+        setAlarm(upcomingDateInMilliseconds, pendingIntentAlarmSound)
 
+        val pendingIntentAlarmLight = createPendingIntentForAlarmLight(alarm)
+        val upcomingDateInMillisecondsMinusFiveMinutes = upcomingDateInMilliseconds - 300_000
+        setAlarm(upcomingDateInMillisecondsMinusFiveMinutes, pendingIntentAlarmLight)
+    }
+
+    private fun setAlarm(
+        upcomingDateInMilliseconds: Long,
+        pendingIntentAlarmSound: PendingIntent?
+    ) {
         // to get the alarm firing at an exact time, I set two alarms
 
         // alarm 1
-        val info = AlarmClockInfo(upcomingDateInMilliseconds, pendingIntent)
-        alarmManager.setAlarmClock(info, pendingIntent)
+        val info = AlarmClockInfo(upcomingDateInMilliseconds, pendingIntentAlarmSound)
+        alarmManager.setAlarmClock(info, pendingIntentAlarmSound)
 
         // alarm 2
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             upcomingDateInMilliseconds,
-            pendingIntent
+            pendingIntentAlarmSound
         )
     }
 
     fun cancel(alarm: Alarm) {
-        val pendingIntent = createPendingIntent(alarm)
-        if (pendingIntent != null) {
-            alarmManager.cancel(pendingIntent)
+        val pendingIntentForAlarmLight = createPendingIntentForAlarmLight(alarm)
+        val pendingIntentForAlarmSound = createPendingIntentForAlarmSound(alarm)
+
+        if (pendingIntentForAlarmLight != null) {
+            alarmManager.cancel(pendingIntentForAlarmLight)
+        }
+
+        if (pendingIntentForAlarmSound != null) {
+            alarmManager.cancel(pendingIntentForAlarmSound)
         }
     }
 
-    private fun createPendingIntent(alarm: Alarm): PendingIntent? {
-        val intent = Intent(context, AlarmBroadcastReceiver::class.java)
-        intent.putExtra("alarmId", alarm.id)
-
+    private fun createPendingIntentForAlarmLight(alarm: Alarm): PendingIntent? {
+        val intent = Intent(context, AlarmLightBroadcastReceiver::class.java)
         return PendingIntent.getBroadcast(context, alarm.id.toInt(), intent, 0)
     }
 
+    private fun createPendingIntentForAlarmSound(alarm: Alarm): PendingIntent? {
+        val intent = Intent(context, AlarmSoundBroadcastReceiver::class.java)
+        intent.putExtra("alarmId", alarm.id)
+
+        return PendingIntent.getBroadcast(context, -alarm.id.toInt(), intent, 0)
+    }
 }

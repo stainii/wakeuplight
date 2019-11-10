@@ -42,7 +42,6 @@ class CreateAlarmBottomSheet : BottomSheetDialogFragment() {
                 hours = timePicker.hour,
                 minutes = timePicker.minute,
                 enabled = true,
-                temporarilyDisabled = false,
                 enabledOnMonday = true,
                 enabledOnTuesday = true,
                 enabledOnWednesday = true,

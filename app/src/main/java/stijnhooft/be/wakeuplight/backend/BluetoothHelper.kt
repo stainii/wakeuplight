@@ -5,16 +5,26 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import java.util.*
 
-class BluetoothHelper {
+
+class BluetoothHelper (){
 
     private val uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
     private var bluetoothSocket = connect()
 
     fun connect(): BluetoothSocket {
+        enableBluetooth()
         val bluetoothDevice = findBluetoothDevice()
         val bluetoothSocket = bluetoothDevice!!.createInsecureRfcommSocketToServiceRecord(uuid)
         bluetoothSocket.connect()
         return bluetoothSocket
+    }
+
+    private fun enableBluetooth() {
+        val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        if (!mBluetoothAdapter.isEnabled) {
+            mBluetoothAdapter.enable()
+            Thread.sleep(1000L)
+        }
     }
 
     fun send(message: String) {
