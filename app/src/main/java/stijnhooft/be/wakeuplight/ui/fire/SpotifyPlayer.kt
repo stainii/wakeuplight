@@ -3,7 +3,6 @@ package stijnhooft.be.wakeuplight.ui.fire
 import android.content.Context
 import android.media.AudioManager
 import com.spotify.android.appremote.api.ConnectionParams
-import com.spotify.android.appremote.api.Connector.ConnectionListener
 import com.spotify.android.appremote.api.SpotifyAppRemote
 
 
@@ -50,21 +49,4 @@ class SpotifyPlayer(private val context: Context) {
     private fun determineOriginalVolume(): Int {
         return audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
     }
-}
-
-class SpotifyConnectionListener(private val spotifyPlayer: SpotifyPlayer): ConnectionListener {
-
-    companion object {
-        private const val SPOTIFY_PLAYLIST_ID = "spotify:playlist:18wMGEYXOerJCUHxoBkygD"
-    }
-
-    override fun onConnected(spotifyAppRemote: SpotifyAppRemote) {
-        spotifyPlayer.spotifyAppRemote = spotifyAppRemote
-        spotifyAppRemote.playerApi.play(SPOTIFY_PLAYLIST_ID)
-    }
-
-    override fun onFailure(throwable: Throwable) {
-        throw throwable
-    }
-
 }

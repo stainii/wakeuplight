@@ -27,7 +27,7 @@ class FiringAlarmActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         spotifyPlayer = SpotifyPlayer(this)
-        //trySettingUpBluetooth()
+        trySettingUpBluetooth()
 
         // set up ui
         hideUI()
@@ -36,7 +36,7 @@ class FiringAlarmActivity : AppCompatActivity() {
 
         // ring the alarm and turn on the light
         spotifyPlayer.play()
-        //bluetoothHelper?.send("1")
+        bluetoothHelper?.send("1")
     }
 
     private fun trySettingUpBluetooth() {
@@ -50,8 +50,8 @@ class FiringAlarmActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         spotifyPlayer.stop()
-        //bluetoothHelper?.send("0")
-        //bluetoothHelper?.disconnect()
+        bluetoothHelper?.send("0")
+        bluetoothHelper?.disconnect()
     }
 
     private fun initTurnOffAlarmButton() {
@@ -77,6 +77,5 @@ class FiringAlarmActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
     }
-
 
 }

@@ -37,7 +37,20 @@ class CreateAlarmBottomSheet : BottomSheetDialogFragment() {
         // add click listener to save button
         saveButton.setOnClickListener {
             val id = DateTime().millis
-            callback(Alarm(id, timePicker.hour, timePicker.minute, true))
+            callback(Alarm(
+                id = id,
+                hours = timePicker.hour,
+                minutes = timePicker.minute,
+                enabled = true,
+                temporarilyDisabled = false,
+                enabledOnMonday = true,
+                enabledOnTuesday = true,
+                enabledOnWednesday = true,
+                enabledOnThursday = true,
+                enabledOnFriday = true,
+                enabledOnSaturday = true,
+                enabledOnSunday = true
+            ))
             this.dismiss()
         }
 
