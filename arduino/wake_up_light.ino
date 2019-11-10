@@ -70,7 +70,6 @@ void turnOn() {
   int r = 0;
   int g = 0;
   int b = 0;
-  int wait = 100;
 
   while (r < 254 && b < 254 && g < 150) {
     if (r < 253) {
@@ -89,7 +88,7 @@ void turnOn() {
     }
 
     setColor(r, g, b);
-    delay(500);
+    delay(1500 / strip.numPixels());
   }
  
 }
