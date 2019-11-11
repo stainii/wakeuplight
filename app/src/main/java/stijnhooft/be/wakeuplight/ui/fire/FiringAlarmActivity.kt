@@ -1,35 +1,26 @@
 package stijnhooft.be.wakeuplight.ui.fire
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import stijnhooft.be.wakeuplight.R
-import stijnhooft.be.wakeuplight.backend.BluetoothHelper
+import stijnhooft.be.wakeuplight.backend.AlarmScheduler
 
-
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 class FiringAlarmActivity : AppCompatActivity() {
 
     private lateinit var spotifyPlayer: SpotifyPlayer
-    private var bluetoothHelper: BluetoothHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // set up class
         super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.activity_firing_alarm)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         spotifyPlayer = SpotifyPlayer(this)
-        trySettingUpBluetooth()
 
         // set up ui
+        setContentView(R.layout.activity_firing_alarm)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         hideUI()
         allowTheActivityToBeVisibleOnTheLockScreen()
         initTurnOffAlarmButton()
@@ -38,19 +29,10 @@ class FiringAlarmActivity : AppCompatActivity() {
         spotifyPlayer.play()
     }
 
-    private fun trySettingUpBluetooth() {
-        try {
-            bluetoothHelper = BluetoothHelper()
-        } catch (e: Exception) {
-            Log.e("FiringAlarmActivity", "Could not connect with bluetooth device", e)
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         spotifyPlayer.stop()
-        bluetoothHelper?.send("0")
-        bluetoothHelper?.disconnect()
+        AlarmScheduler(this).turnOffLightInAMinute()
     }
 
     private fun initTurnOffAlarmButton() {

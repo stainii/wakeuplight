@@ -7,15 +7,15 @@ import android.util.Log
 import stijnhooft.be.wakeuplight.backend.BluetoothHelper
 
 
-class AlarmLightBroadcastReceiver : BroadcastReceiver() {
+class TurnOffAlarmLightBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         try {
             val bluetoothHelper = BluetoothHelper()
-            bluetoothHelper.send("1")
+            bluetoothHelper.send("0")
             bluetoothHelper.disconnect()
         } catch (e: Exception) {
-            Log.e("AlarmLightBroadcastReceiver", "Could not connect with bluetooth device", e)
+            Log.e("TurnOffAlarmLightBroadcastReceiver", "Could not connect with bluetooth device", e)
         }
     }
 

@@ -27,5 +27,9 @@ class AlarmUtil {
             }
         }
 
+        fun getNowPlusXMinutesInMilliseconds(minutes: Int): Long {
+            return DateTime.now().plusMinutes(minutes).millis
+        }
+
     }
 }

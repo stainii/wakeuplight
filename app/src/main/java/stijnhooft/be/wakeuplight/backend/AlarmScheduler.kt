@@ -9,7 +9,9 @@ import android.util.Log
 import stijnhooft.be.wakeuplight.AlarmUtil
 import stijnhooft.be.wakeuplight.backend.broadcastreceiver.AlarmLightBroadcastReceiver
 import stijnhooft.be.wakeuplight.backend.broadcastreceiver.AlarmSoundBroadcastReceiver
+import stijnhooft.be.wakeuplight.backend.broadcastreceiver.TurnOffAlarmLightBroadcastReceiver
 import stijnhooft.be.wakeuplight.backend.domain.Alarm
+import java.util.*
 
 
 class AlarmScheduler(private val context: Context) {
@@ -29,22 +31,10 @@ class AlarmScheduler(private val context: Context) {
         setAlarm(upcomingDateInMillisecondsMinusFiveMinutes, pendingIntentAlarmLight)
     }
 
-    private fun setAlarm(
-        upcomingDateInMilliseconds: Long,
-        pendingIntentAlarmSound: PendingIntent?
-    ) {
-        // to get the alarm firing at an exact time, I set two alarms
-
-        // alarm 1
-        val info = AlarmClockInfo(upcomingDateInMilliseconds, pendingIntentAlarmSound)
-        alarmManager.setAlarmClock(info, pendingIntentAlarmSound)
-
-        // alarm 2
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            upcomingDateInMilliseconds,
-            pendingIntentAlarmSound
-        )
+    fun turnOffLightInAMinute() {
+        val intent = Intent(context, TurnOffAlarmLightBroadcastReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context, Random().nextInt(), intent, 0)
+        setAlarm(AlarmUtil.getNowPlusXMinutesInMilliseconds(1), pendingIntent)
     }
 
     fun cancel(alarm: Alarm) {
@@ -70,5 +60,23 @@ class AlarmScheduler(private val context: Context) {
         intent.putExtra("alarmId", alarm.id)
 
         return PendingIntent.getBroadcast(context, -alarm.id.toInt(), intent, 0)
+    }
+
+    private fun setAlarm(
+        upcomingDateInMilliseconds: Long,
+        pendingIntentAlarmSound: PendingIntent?
+    ) {
+        // to get the alarm firing at an exact time, I set two alarms
+
+        // alarm 1
+        val info = AlarmClockInfo(upcomingDateInMilliseconds, pendingIntentAlarmSound)
+        alarmManager.setAlarmClock(info, pendingIntentAlarmSound)
+
+        // alarm 2
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            upcomingDateInMilliseconds,
+            pendingIntentAlarmSound
+        )
     }
 }
