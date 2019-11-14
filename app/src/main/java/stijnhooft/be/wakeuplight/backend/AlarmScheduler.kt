@@ -52,6 +52,8 @@ class AlarmScheduler(private val context: Context) {
 
     private fun createPendingIntentForAlarmLight(alarm: Alarm): PendingIntent? {
         val intent = Intent(context, AlarmLightBroadcastReceiver::class.java)
+        intent.putExtra("alarmId", alarm.id)
+
         return PendingIntent.getBroadcast(context, alarm.id.toInt(), intent, 0)
     }
 
