@@ -57,10 +57,6 @@
             android:process=":remote" />
 
         <receiver
-            android:name=".backend.broadcastreceiver.TurnOffAlarmLightBroadcastReceiver"
-            android:process=":remote" />
-
-        <receiver
             android:name=".backend.broadcastreceiver.RescheduleAlarmsAfterRebootBroadcastReceiver"
             android:enabled="true"
             android:exported="true"

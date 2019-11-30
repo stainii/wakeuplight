@@ -32,7 +32,6 @@ class FiringAlarmActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         spotifyPlayer.stop()
-        AlarmScheduler(this).turnOffLightInAMinute()
     }
 
     private fun initTurnOffAlarmButton() {

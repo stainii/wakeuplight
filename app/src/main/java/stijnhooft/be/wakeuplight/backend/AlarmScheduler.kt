@@ -9,9 +9,7 @@ import android.util.Log
 import stijnhooft.be.wakeuplight.AlarmUtil
 import stijnhooft.be.wakeuplight.backend.broadcastreceiver.AlarmLightBroadcastReceiver
 import stijnhooft.be.wakeuplight.backend.broadcastreceiver.AlarmSoundBroadcastReceiver
-import stijnhooft.be.wakeuplight.backend.broadcastreceiver.TurnOffAlarmLightBroadcastReceiver
 import stijnhooft.be.wakeuplight.backend.domain.Alarm
-import java.util.*
 
 
 class AlarmScheduler(private val context: Context) {
@@ -29,12 +27,6 @@ class AlarmScheduler(private val context: Context) {
         val pendingIntentAlarmLight = createPendingIntentForAlarmLight(alarm)
         val upcomingDateInMillisecondsMinusFiveMinutes = upcomingDateInMilliseconds - 300_000
         setAlarm(upcomingDateInMillisecondsMinusFiveMinutes, pendingIntentAlarmLight)
-    }
-
-    fun turnOffLightInAMinute() {
-        val intent = Intent(context, TurnOffAlarmLightBroadcastReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, Random().nextInt(), intent, 0)
-        setAlarm(AlarmUtil.getNowPlusXMinutesInMilliseconds(1), pendingIntent)
     }
 
     fun cancel(alarm: Alarm) {
