@@ -15,6 +15,15 @@
         android:src="@drawable/ic_alarm_add_black_24dp"
         app:backgroundTint="@color/colorPrimaryDark" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/toggleLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_light_bulb"
+        app:backgroundTint="@color/colorPrimaryDark" />
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

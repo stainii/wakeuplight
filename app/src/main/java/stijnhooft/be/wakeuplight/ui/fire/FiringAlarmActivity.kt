@@ -1,13 +1,15 @@
 package stijnhooft.be.wakeuplight.ui.fire
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_main.*
 import stijnhooft.be.wakeuplight.R
-import stijnhooft.be.wakeuplight.backend.AlarmScheduler
+import stijnhooft.be.wakeuplight.backend.LightHelper
 
 class FiringAlarmActivity : AppCompatActivity() {
 
@@ -24,6 +26,7 @@ class FiringAlarmActivity : AppCompatActivity() {
         hideUI()
         allowTheActivityToBeVisibleOnTheLockScreen()
         initTurnOffAlarmButton()
+        initToggleLightButton()
 
         // ring the alarm
         spotifyPlayer.play()
@@ -58,4 +61,13 @@ class FiringAlarmActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
     }
 
+    private fun initToggleLightButton() {
+        toggleLight.setOnClickListener {
+            try {
+                LightHelper.instance.toggle()
+            } catch (e: Exception) {
+                Log.e("FiringAlarmActivity","Could not toggle light.", e)
+            }
+        }
+    }
 }

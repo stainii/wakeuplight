@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import stijnhooft.be.wakeuplight.backend.AlarmScheduler
 import stijnhooft.be.wakeuplight.backend.repository.AlarmRepository
 
-class RescheduleAlarmsAfterRebootBroadcastReceiver : BroadcastReceiver() {
+class RescheduleAllAlarms : BroadcastReceiver() {
 
     private lateinit var alarmRepository: AlarmRepository
     private lateinit var alarmScheduler: AlarmScheduler
@@ -22,9 +22,10 @@ class RescheduleAlarmsAfterRebootBroadcastReceiver : BroadcastReceiver() {
         this.alarmRepository = AlarmRepository(context)
         this.alarmScheduler = AlarmScheduler(context)
 
-        // fetch all existing alarms and schedule them
+        // fetch all existing alarms and reschedule them
         CoroutineScope(Dispatchers.IO).launch {
             val alarms = alarmRepository.findAll()
+            alarms.forEach { alarm -> alarmScheduler.cancel(alarm) }
             alarms.forEach { alarm -> alarmScheduler.schedule(alarm) }
         }
 

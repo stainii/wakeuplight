@@ -57,19 +57,19 @@ class AlarmScheduler(private val context: Context) {
     }
 
     private fun setAlarm(
-        upcomingDateInMilliseconds: Long,
+        dateTimeInMilliseconds: Long,
         pendingIntentAlarmSound: PendingIntent?
     ) {
         // to get the alarm firing at an exact time, I set two alarms
 
         // alarm 1
-        val info = AlarmClockInfo(upcomingDateInMilliseconds, pendingIntentAlarmSound)
+        val info = AlarmClockInfo(dateTimeInMilliseconds, pendingIntentAlarmSound)
         alarmManager.setAlarmClock(info, pendingIntentAlarmSound)
 
         // alarm 2
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            upcomingDateInMilliseconds,
+            dateTimeInMilliseconds,
             pendingIntentAlarmSound
         )
     }

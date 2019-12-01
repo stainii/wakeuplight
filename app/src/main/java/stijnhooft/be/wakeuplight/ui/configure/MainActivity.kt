@@ -1,6 +1,7 @@
 package stijnhooft.be.wakeuplight.ui.configure
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import stijnhooft.be.wakeuplight.R
+import stijnhooft.be.wakeuplight.backend.LightHelper
 import stijnhooft.be.wakeuplight.ui.configure.alarm.AlarmViewAdapter
 
 
@@ -18,17 +20,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var alarmsLayoutManager: RecyclerView.LayoutManager
     private lateinit var alarmViewModel: AlarmViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        initCreateAlarm()
+        initCreateAlarmButton()
+        initToggleLightButton()
         initAlarmView()
     }
 
-    private fun initCreateAlarm() {
+    private fun initCreateAlarmButton() {
         val createAlarmBottomSheet =
             CreateAlarmBottomSheet()
 
@@ -74,6 +76,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(alarmRecyclerView)
+    }
+
+    private fun initToggleLightButton() {
+        toggleLight.setOnClickListener {
+            try {
+                LightHelper.instance.toggle()
+            } catch (e: Exception) {
+                Log.e("MainActivity","Could not toggle light.", e)
+            }
+        }
     }
 
 }
