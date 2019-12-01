@@ -1,14 +1,14 @@
 package stijnhooft.be.wakeuplight.backend
 
 /** Singleton class keeping a bluetooth reference to the light **/
-class LightHelper private constructor() {
+class LightManager private constructor() {
 
     private object HOLDER {
-        val INSTANCE = LightHelper()
+        val INSTANCE = LightManager()
     }
 
     companion object {
-        val instance: LightHelper by lazy { HOLDER.INSTANCE }
+        val INSTANCE: LightManager by lazy { HOLDER.INSTANCE }
     }
 
     fun turnOn() {
@@ -24,6 +24,6 @@ class LightHelper private constructor() {
     }
 
     private fun send(key: String) {
-        BluetoothHelper.instance.send(key)
+        BluetoothManager.INSTANCE.send(key)
     }
 }

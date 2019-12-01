@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 import stijnhooft.be.wakeuplight.R
-import stijnhooft.be.wakeuplight.backend.LightHelper
+import stijnhooft.be.wakeuplight.backend.LightManager
 
 class FiringAlarmActivity : AppCompatActivity() {
 
@@ -64,7 +64,7 @@ class FiringAlarmActivity : AppCompatActivity() {
     private fun initToggleLightButton() {
         toggleLight.setOnClickListener {
             try {
-                LightHelper.instance.toggle()
+                LightManager.INSTANCE.toggle()
             } catch (e: Exception) {
                 Log.e("FiringAlarmActivity","Could not toggle light.", e)
             }

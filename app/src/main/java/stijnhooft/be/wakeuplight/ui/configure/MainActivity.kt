@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import stijnhooft.be.wakeuplight.R
-import stijnhooft.be.wakeuplight.backend.LightHelper
+import stijnhooft.be.wakeuplight.backend.LightManager
 import stijnhooft.be.wakeuplight.ui.configure.alarm.AlarmViewAdapter
 
 
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
     private fun initToggleLightButton() {
         toggleLight.setOnClickListener {
             try {
-                LightHelper.instance.toggle()
+                LightManager.INSTANCE.toggle()
             } catch (e: Exception) {
                 Log.e("MainActivity","Could not toggle light.", e)
             }

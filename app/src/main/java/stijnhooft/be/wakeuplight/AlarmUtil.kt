@@ -26,10 +26,5 @@ class AlarmUtil {
                 nextAlarmCandidate.plusDays(1).millis
             }
         }
-
-        fun getNowPlusXMinutesInMilliseconds(minutes: Int): Long {
-            return DateTime.now().plusMinutes(minutes).millis
-        }
-
     }
 }

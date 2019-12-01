@@ -63,7 +63,7 @@ class AlarmScheduler(private val context: Context) {
         // to get the alarm firing at an exact time, I set two alarms
 
         // alarm 1
-        val info = AlarmClockInfo(dateTimeInMilliseconds, pendingIntentAlarmSound)
+        val info = AlarmClockInfo(dateTimeInMilliseconds - 1000, pendingIntentAlarmSound)
         alarmManager.setAlarmClock(info, pendingIntentAlarmSound)
 
         // alarm 2
