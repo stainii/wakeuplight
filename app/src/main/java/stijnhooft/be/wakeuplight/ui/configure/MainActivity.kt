@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initCreateAlarmButton() {
         val createAlarmBottomSheet = CreateAlarmBottomSheet()
+        add.setOnClickListener { createAlarmBottomSheet.show(supportFragmentManager, CreateAlarmBottomSheet.TAG) }
         createAlarmBottomSheet.setSaveListener { alarm -> alarmViewModel.create(alarm) }
     }
 
