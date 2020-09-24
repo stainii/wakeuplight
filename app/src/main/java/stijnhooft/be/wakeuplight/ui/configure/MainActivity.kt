@@ -31,19 +31,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initCreateAlarmButton() {
-        val createAlarmBottomSheet =
-            CreateAlarmBottomSheet()
-
-        add.setOnClickListener { showCreateAlarmBottomSheet(createAlarmBottomSheet) }
+        val createAlarmBottomSheet = CreateAlarmBottomSheet()
         createAlarmBottomSheet.setSaveListener { alarm -> alarmViewModel.create(alarm) }
-    }
-
-    private fun showCreateAlarmBottomSheet(modalBottomSheet: CreateAlarmBottomSheet) {
-        val bundle = Bundle()
-        val myMessage = "Stack Overflow is cool!"
-        bundle.putString("message", myMessage)
-        modalBottomSheet.arguments = bundle
-        modalBottomSheet.show(supportFragmentManager, CreateAlarmBottomSheet.TAG)
     }
 
     private fun initAlarmView() {

@@ -12,6 +12,7 @@ class SpotifyConnectionListener(private val spotifyPlayer: SpotifyPlayer):
 
     override fun onConnected(spotifyAppRemote: SpotifyAppRemote) {
         spotifyPlayer.spotifyAppRemote = spotifyAppRemote
+        spotifyAppRemote.playerApi.setShuffle(true)
         spotifyAppRemote.playerApi.play(SPOTIFY_PLAYLIST_ID)
     }
 
