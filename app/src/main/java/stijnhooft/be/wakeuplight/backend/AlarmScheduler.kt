@@ -8,7 +8,6 @@ import android.content.Intent
 import android.util.Log
 import stijnhooft.be.wakeuplight.AlarmUtil
 import stijnhooft.be.wakeuplight.backend.broadcastreceiver.AlarmLightBroadcastReceiver
-import stijnhooft.be.wakeuplight.backend.broadcastreceiver.AlarmSoundBroadcastReceiver
 import stijnhooft.be.wakeuplight.backend.domain.Alarm
 
 
@@ -19,26 +18,20 @@ class AlarmScheduler(private val context: Context) {
     fun schedule(alarm: Alarm) {
         Log.i("AlarmScheduler", "Scheduling alarm $alarm")
 
-        val pendingIntentAlarmSound = createPendingIntentForAlarmSound(alarm)
+        val pendingIntentAlarmLight = createPendingIntentForAlarmLight(alarm)
+
         val upcomingDateInMilliseconds =
             AlarmUtil.getUpcomingDateInMilliseconds(alarm.hours, alarm.minutes)
-        setAlarm(upcomingDateInMilliseconds, pendingIntentAlarmSound)
-
-        val pendingIntentAlarmLight = createPendingIntentForAlarmLight(alarm)
         val upcomingDateInMillisecondsMinusFiveMinutes = upcomingDateInMilliseconds - 300_000
+
         setAlarm(upcomingDateInMillisecondsMinusFiveMinutes, pendingIntentAlarmLight)
     }
 
     fun cancel(alarm: Alarm) {
         val pendingIntentForAlarmLight = createPendingIntentForAlarmLight(alarm)
-        val pendingIntentForAlarmSound = createPendingIntentForAlarmSound(alarm)
 
         if (pendingIntentForAlarmLight != null) {
             alarmManager.cancel(pendingIntentForAlarmLight)
-        }
-
-        if (pendingIntentForAlarmSound != null) {
-            alarmManager.cancel(pendingIntentForAlarmSound)
         }
     }
 
@@ -46,14 +39,12 @@ class AlarmScheduler(private val context: Context) {
         val intent = Intent(context, AlarmLightBroadcastReceiver::class.java)
         intent.putExtra("alarmId", alarm.id)
 
-        return PendingIntent.getBroadcast(context, alarm.id.toInt(), intent, PendingIntent.FLAG_MUTABLE)
-    }
-
-    private fun createPendingIntentForAlarmSound(alarm: Alarm): PendingIntent? {
-        val intent = Intent(context, AlarmSoundBroadcastReceiver::class.java)
-        intent.putExtra("alarmId", alarm.id)
-
-        return PendingIntent.getBroadcast(context, -alarm.id.toInt(), intent, PendingIntent.FLAG_MUTABLE)
+        return PendingIntent.getBroadcast(
+            context,
+            alarm.id.toInt(),
+            intent,
+            PendingIntent.FLAG_MUTABLE
+        )
     }
 
     private fun setAlarm(
