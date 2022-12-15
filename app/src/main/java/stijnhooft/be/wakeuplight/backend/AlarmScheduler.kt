@@ -46,14 +46,14 @@ class AlarmScheduler(private val context: Context) {
         val intent = Intent(context, AlarmLightBroadcastReceiver::class.java)
         intent.putExtra("alarmId", alarm.id)
 
-        return PendingIntent.getBroadcast(context, alarm.id.toInt(), intent, 0)
+        return PendingIntent.getBroadcast(context, alarm.id.toInt(), intent, PendingIntent.FLAG_MUTABLE)
     }
 
     private fun createPendingIntentForAlarmSound(alarm: Alarm): PendingIntent? {
         val intent = Intent(context, AlarmSoundBroadcastReceiver::class.java)
         intent.putExtra("alarmId", alarm.id)
 
-        return PendingIntent.getBroadcast(context, -alarm.id.toInt(), intent, 0)
+        return PendingIntent.getBroadcast(context, -alarm.id.toInt(), intent, PendingIntent.FLAG_MUTABLE)
     }
 
     private fun setAlarm(

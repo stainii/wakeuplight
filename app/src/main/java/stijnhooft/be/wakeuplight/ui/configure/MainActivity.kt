@@ -1,8 +1,12 @@
 package stijnhooft.be.wakeuplight.ui.configure
 
+import android.Manifest.permission.BLUETOOTH_CONNECT
+import android.Manifest.permission.BLUETOOTH_SCAN
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,11 +32,32 @@ class MainActivity : AppCompatActivity() {
         initCreateAlarmButton()
         initToggleLightButton()
         initAlarmView()
+
+        askForBluetoothPermissions()
+    }
+
+    private fun askForBluetoothPermissions() {
+        val permission1 =
+            ActivityCompat.checkSelfPermission(this, BLUETOOTH_CONNECT)
+        val permission2 =
+            ActivityCompat.checkSelfPermission(this, BLUETOOTH_SCAN)
+        if (permission1 != PackageManager.PERMISSION_GRANTED || permission2 != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(BLUETOOTH_CONNECT, BLUETOOTH_SCAN),
+                1
+            )
+        }
     }
 
     private fun initCreateAlarmButton() {
         val createAlarmBottomSheet = CreateAlarmBottomSheet()
-        add.setOnClickListener { createAlarmBottomSheet.show(supportFragmentManager, CreateAlarmBottomSheet.TAG) }
+        add.setOnClickListener {
+            createAlarmBottomSheet.show(
+                supportFragmentManager,
+                CreateAlarmBottomSheet.TAG
+            )
+        }
         createAlarmBottomSheet.setSaveListener { alarm -> alarmViewModel.create(alarm) }
     }
 
@@ -73,7 +98,7 @@ class MainActivity : AppCompatActivity() {
             try {
                 LightManager.INSTANCE.toggle()
             } catch (e: Exception) {
-                Log.e("MainActivity","Could not toggle light.", e)
+                Log.e("MainActivity", "Could not toggle light.", e)
             }
         }
     }
