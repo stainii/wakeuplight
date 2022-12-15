@@ -20,7 +20,9 @@ android {
         }
     }
     packagingOptions {
-        exclude 'META-INF/atomicfu.kotlin_module'
+        resources {
+            excludes += ['META-INF/atomicfu.kotlin_module']
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -29,6 +31,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    namespace 'stijnhooft.be.wakeuplight'
 }
 
 dependencies {
